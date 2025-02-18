@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Arduino</title>
+    <script>
+        async function enviarComando(comando) {
+            await fetch("https://tu-api-azure.com/enviar", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ accion: comando })
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Control de Arduino</h1>
+    <button onclick="enviarComando('ON1')">Encender 1</button>
+    <button onclick="enviarComando('OFF1')">Apagar 1</button>
+    <button onclick="enviarComando('ON2')">Encender 2</button>
+    <button onclick="enviarComando('OFF2')">Apagar 2</button>
+    <button onclick="enviarComando('ON3')">Encender 3</button>
+    <button onclick="enviarComando('OFF3')">Apagar 3</button>
+    <button onclick="enviarComando('ON4')">Encender 4</button>
+    <button onclick="enviarComando('OFF4')">Apagar 4</button>
+</body>
+</html>
