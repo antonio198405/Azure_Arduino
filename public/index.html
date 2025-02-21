@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Relés - Arduino</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        button { margin: 10px; padding: 10px 20px; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <h1>Control de Relés</h1>
+
+    <div>
+        <button onclick="controlarRele('R1', 1)">Encender R1</button>
+        <button onclick="controlarRele('R1', 0)">Apagar R1</button>
+    </div>
+    <div>
+        <button onclick="controlarRele('R2', 1)">Encender R2</button>
+        <button onclick="controlarRele('R2', 0)">Apagar R2</button>
+    </div>
+    <div>
+        <button onclick="controlarRele('R3', 1)">Encender R3</button>
+        <button onclick="controlarRele('R3', 0)">Apagar R3</button>
+    </div>
+    <div>
+        <button onclick="controlarRele('R4', 1)">Encender R4</button>
+        <button onclick="controlarRele('R4', 0)">Apagar R4</button>
+    </div>
+
+    <h2>Estado de los Relés</h2>
+    <pre id="estadoReles">Cargando...</pre>
+
+    <script>
+        const server = "https://TU_APP_SERVICE.azurewebsites.net";
+
+        function controlarRele(rele, estado) {
+            fetch(`${server}/control`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ rele, estado })
+            })
+            .then(response => response.json())
+            .then(data => alert(data.mensaje))
+            .catch(error => console.error("Error:", error));
+        }
+
+        function obtenerEstados() {
+            fetch(`${server}/estados`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("estadoReles").innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        setInterval(obtenerEstados, 2000);
+    </script>
+</body>
+</html>
